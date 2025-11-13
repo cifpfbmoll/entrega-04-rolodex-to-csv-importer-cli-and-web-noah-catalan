@@ -63,6 +63,22 @@ function addContact($name, $phone, $email) {
     return ['success' => '¡Contacto añadido correctamente!'];
 }
 
+// Manejar descarga de CSV
+if (isset($_GET['download']) && $_GET['download'] === 'csv') {
+    if (file_exists($csvFile)) {
+        // Generar nombre con fecha
+        $filename = 'contacts_' . date('Y-m-d_His') . '.csv';
+        
+        header('Content-Type: text/csv');
+        header('Content-Disposition: attachment; filename="' . $filename . '"');
+        header('Pragma: no-cache');
+        header('Expires: 0');
+        
+        readfile($csvFile);
+        exit;
+    }
+}
+
 // Manejar formulario POST
 $message = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -195,7 +211,7 @@ $withEmail = count(array_filter($contacts, fn($c) => !empty($c['email'])));
                 <a href="#add-contact" class="btn btn-light btn-lg">
                     <i class="bi bi-person-plus me-2"></i>Añadir Contacto
                 </a>
-                <a href="<?= $csvFile ?>" class="btn btn-outline-light btn-lg">
+                <a href="?download=csv" class="btn btn-outline-light btn-lg">
                     <i class="bi bi-download me-2"></i>Descargar CSV
                 </a>
             </div>

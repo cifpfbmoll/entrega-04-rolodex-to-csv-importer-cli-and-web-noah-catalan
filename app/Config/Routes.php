@@ -54,6 +54,7 @@ if (is_file(APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php')) {
 $routes->get('/contacts', 'Contacts::index');
 $routes->get('/contacts/create', 'Contacts::create');
 $routes->post('/contacts/store', 'Contacts::store');
+$routes->get('/contacts/delete/(:num)', 'Contacts::delete/$1');
 $routes->get('/contacts/export', 'Contacts::export');
 
 // Default route redirect to contacts

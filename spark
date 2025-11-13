@@ -51,21 +51,21 @@
 define('FCPATH', __DIR__ . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR);
 
 // Path to the root directory.
-define('ROOTPATH', realpath(__DIR__ . DIRECTORY_SEPARATOR . '..') . DIRECTORY_SEPARATOR);
+define('ROOTPATH', __DIR__ . DIRECTORY_SEPARATOR);
 
 // Path to the "app" directory.
 if (! defined('APPPATH')) {
-    define('APPPATH', realpath(__DIR__ . DIRECTORY_SEPARATOR . 'app') . DIRECTORY_SEPARATOR);
+    define('APPPATH', __DIR__ . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR);
 }
 
 // Path to the "writable" directory.
 if (! defined('WRITEPATH')) {
-    define('WRITEPATH', realpath(__DIR__ . DIRECTORY_SEPARATOR . 'writable') . DIRECTORY_SEPARATOR);
+    define('WRITEPATH', __DIR__ . DIRECTORY_SEPARATOR . 'writable' . DIRECTORY_SEPARATOR);
 }
 
 // Path to the "tests" directory.
 if (! defined('TESTPATH')) {
-    define('TESTPATH', realpath(__DIR__ . DIRECTORY_SEPARATOR . 'tests') . DIRECTORY_SEPARATOR);
+    define('TESTPATH', __DIR__ . DIRECTORY_SEPARATOR . 'tests' . DIRECTORY_SEPARATOR);
 }
 
 /*
@@ -79,7 +79,7 @@ if (! defined('TESTPATH')) {
 
 // Load our paths config file
 // This is the line that might need to be changed.
-require FCPATH . '../app/Config/Paths.php';
+require APPPATH . 'Config/Paths.php';
 
 // ^^^ Change this line if you move your application folder
 $paths = new Config\Paths();

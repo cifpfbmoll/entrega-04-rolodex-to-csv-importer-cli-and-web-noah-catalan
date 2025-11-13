@@ -24,6 +24,26 @@ class Modules
 
     /**
      * -------------------------------------------------------------------
+     * Discover in Composer
+     * -------------------------------------------------------------------
+     *
+     * If true, then auto-discovery will happen across all namespaces
+     * loaded by Composer, as well as the namespaces configured locally.
+     */
+    public $discoverInComposer = true;
+
+    /**
+     * -------------------------------------------------------------------
+     * Composer Packages
+     * -------------------------------------------------------------------
+     *
+     * An array of composer packages that will be auto-discovered.
+     * Leave empty to discover all packages.
+     */
+    public $composerPackages = [];
+
+    /**
+     * -------------------------------------------------------------------
      * Auto-Discover Paths
      * -------------------------------------------------------------------
      *

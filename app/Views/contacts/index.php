@@ -1,34 +1,43 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <title>📇 Mis Contactos</title>
+    <title>📇 Gestor de Contactos - Rolodex Digital</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
     <style>
         body { 
-            background-color: #f8f9fa; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            padding-bottom: 2rem;
         }
         .container { 
-            max-width: 900px; 
+            max-width: 1100px; 
             padding-top: 2rem;
         }
         .card { 
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3); 
             border: none;
-            border-radius: 12px;
+            border-radius: 15px;
+            background: white;
         }
         .card-header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            border-radius: 12px 12px 0 0 !important;
+            border-radius: 15px 15px 0 0 !important;
             border: none;
+            padding: 1.5rem;
         }
         .btn {
             border-radius: 8px;
             font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
         .table {
             border-radius: 8px;
@@ -40,23 +49,65 @@
             font-weight: 600;
             color: #495057;
         }
+        .table tbody tr:hover {
+            background-color: #f8f9fa;
+            transition: all 0.2s ease;
+        }
         .alert {
-            border-radius: 8px;
+            border-radius: 10px;
             border: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
         .hero-section {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background: white;
+            color: #333;
             padding: 2rem;
-            border-radius: 12px;
+            border-radius: 15px;
             margin-bottom: 2rem;
             text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
         .stats-badge {
-            background-color: rgba(255,255,255,0.2);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
             padding: 0.5rem 1rem;
             border-radius: 20px;
             font-size: 0.9rem;
+            box-shadow: 0 4px 10px rgba(102, 126, 234, 0.4);
+        }
+        .search-box {
+            border-radius: 25px;
+            border: 2px solid #e0e0e0;
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        .search-box:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+        .btn-delete {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.875rem;
+        }
+        .stat-card {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .stat-card:nth-child(2) {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+        .stat-card:nth-child(3) {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+        .stat-card h5 {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 0.5rem 0;
         }
     </style>
 </head>
@@ -64,13 +115,13 @@
     <div class="container">
         <!-- Hero Section -->
         <div class="hero-section">
-            <h1 class="mb-3">📇 Gestor de Contactos</h1>
-            <p class="mb-4">Convierte tu Rolodex físico en una agenda digital moderna</p>
-            <div class="d-flex justify-content-center gap-2">
-                <a href="/contacts/create" class="btn btn-light">
-                    <i class="bi bi-person-plus"></i> Añadir Contacto
+            <h1 class="mb-3">📇 Gestor de Contactos Rolodex</h1>
+            <p class="mb-4 text-muted">Digitaliza tu agenda física con tecnología moderna</p>
+            <div class="d-flex justify-content-center gap-2 flex-wrap">
+                <a href="/contacts/create" class="btn btn-primary btn-lg">
+                    <i class="bi bi-person-plus"></i> Nuevo Contacto
                 </a>
-                <a href="/contacts/export" class="btn btn-outline-light">
+                <a href="/contacts/export" class="btn btn-success btn-lg">
                     <i class="bi bi-download"></i> Exportar CSV
                 </a>
             </div>
@@ -91,6 +142,39 @@
                 <?= session()->getFlashdata('error') ?>
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
+        <?php endif; ?>
+        
+        <!-- Search Bar -->
+        <?php if (!empty($contacts)): ?>
+        <div class="card mb-4">
+            <div class="card-body">
+                <form method="get" action="/contacts" class="row g-3">
+                    <div class="col-md-10">
+                        <input type="text" 
+                               name="search" 
+                               id="searchInput"
+                               class="form-control search-box" 
+                               placeholder="🔍 Buscar por nombre, teléfono o email..."
+                               value="<?= esc($searchTerm ?? '') ?>">
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="bi bi-search"></i> Buscar
+                        </button>
+                    </div>
+                    <?php if ($searchTerm): ?>
+                    <div class="col-12">
+                        <a href="/contacts" class="btn btn-outline-secondary btn-sm">
+                            <i class="bi bi-x-circle"></i> Limpiar búsqueda
+                        </a>
+                        <span class="ms-2 text-muted">
+                            Mostrando <?= count($contacts) ?> resultado(s) para "<?= esc($searchTerm) ?>"
+                        </span>
+                    </div>
+                    <?php endif; ?>
+                </form>
+            </div>
+        </div>
         <?php endif; ?>
         
         <!-- Main Card -->
@@ -133,6 +217,7 @@
                                     <th><i class="bi bi-person me-1"></i> Nombre</th>
                                     <th><i class="bi bi-telephone me-1"></i> Teléfono</th>
                                     <th><i class="bi bi-envelope me-1"></i> Email</th>
+                                    <th class="text-end"><i class="bi bi-gear me-1"></i> Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -161,6 +246,12 @@
                                             <span class="text-muted">-</span>
                                         <?php endif; ?>
                                     </td>
+                                    <td class="text-end">
+                                        <button class="btn btn-danger btn-sm btn-delete" 
+                                                onclick="confirmDelete(<?= $contact['index'] ?>, '<?= esc($contact['name']) ?>')">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </td>
                                 </tr>
                                 <?php endforeach; ?>
                             </tbody>
@@ -168,32 +259,32 @@
                     </div>
                     
                     <!-- Statistics -->
-                    <div class="row mt-4">
-                        <div class="col-md-4 text-center">
-                            <div class="p-3 bg-light rounded">
-                                <i class="bi bi-people display-4 text-primary"></i>
+                    <div class="row mt-4 g-3">
+                        <div class="col-md-4">
+                            <div class="stat-card">
+                                <i class="bi bi-people display-4"></i>
                                 <h5 class="mt-2"><?= count($contacts) ?></h5>
-                                <small class="text-muted">Total Contactos</small>
+                                <small>Total Contactos</small>
                             </div>
                         </div>
-                        <div class="col-md-4 text-center">
-                            <div class="p-3 bg-light rounded">
+                        <div class="col-md-4">
+                            <div class="stat-card">
                                 <?php 
                                 $withPhone = count(array_filter($contacts, fn($c) => !empty($c['phone'])));
                                 ?>
-                                <i class="bi bi-telephone display-4 text-success"></i>
+                                <i class="bi bi-telephone display-4"></i>
                                 <h5 class="mt-2"><?= $withPhone ?></h5>
-                                <small class="text-muted">Con Teléfono</small>
+                                <small>Con Teléfono</small>
                             </div>
                         </div>
-                        <div class="col-md-4 text-center">
-                            <div class="p-3 bg-light rounded">
+                        <div class="col-md-4">
+                            <div class="stat-card">
                                 <?php 
                                 $withEmail = count(array_filter($contacts, fn($c) => !empty($c['email'])));
                                 ?>
-                                <i class="bi bi-envelope display-4 text-info"></i>
+                                <i class="bi bi-envelope display-4"></i>
                                 <h5 class="mt-2"><?= $withEmail ?></h5>
-                                <small class="text-muted">Con Email</small>
+                                <small>Con Email</small>
                             </div>
                         </div>
                     </div>
@@ -203,12 +294,13 @@
         
         <!-- Footer Tips -->
         <div class="text-center mt-4">
-            <div class="card bg-light">
+            <div class="card" style="background: white;">
                 <div class="card-body py-3">
                     <small class="text-muted">
-                        <i class="bi bi-lightbulb me-1"></i>
-                        <strong>Tip:</strong> También puedes usar la línea de comandos con 
-                        <code>php contact-importer.php</code> para una rápida entrada de datos
+                        <i class="bi bi-lightbulb-fill me-1 text-warning"></i>
+                        <strong>Tip Pro:</strong> Usa el comando 
+                        <code class="bg-light p-1 rounded">php spark import:contacts</code> 
+                        para importar contactos rápidamente desde la terminal
                     </small>
                 </div>
             </div>
@@ -217,14 +309,22 @@
     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        function copyCommand() {
-            navigator.clipboard.writeText('php contact-importer.php');
-            const alert = document.getElementById('commandAlert');
-            alert.style.display = 'block';
-            setTimeout(() => {
-                alert.style.display = 'none';
-            }, 3000);
+        function confirmDelete(index, name) {
+            if (confirm(`¿Estás seguro de eliminar el contacto "${name}"?\n\nEsta acción no se puede deshacer.`)) {
+                window.location.href = `/contacts/delete/${index}`;
+            }
         }
+        
+        // Auto-submit search on input (debounced)
+        let searchTimeout;
+        document.getElementById('searchInput')?.addEventListener('input', function(e) {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                if (e.target.value.length >= 2 || e.target.value.length === 0) {
+                    e.target.form.submit();
+                }
+            }, 500);
+        });
     </script>
 </body>
 </html>
