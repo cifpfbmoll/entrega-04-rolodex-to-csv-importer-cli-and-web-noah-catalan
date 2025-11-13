@@ -1,25 +1,48 @@
-# 📇 Rolodex Contact Importer[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/keP9ug1F)
+# Rolodex Contact Importer# 📇 Rolodex Contact Importer[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/keP9ug1F)
 
-# 📇 Rolodex to CSV Importer - Versión Mejorada
 
-Aplicación web y CLI para digitalizar contactos desde agendas físicas Rolodex.
 
-> **Una aplicación full-stack moderna para digitalizar contactos desde agendas físicas Rolodex**
+Aplicación para importar contactos de agenda Rolodex a CSV.# 📇 Rolodex to CSV Importer - Versión Mejorada
 
-## 🚀 Ejecución
 
-[![CodeIgniter](https://img.shields.io/badge/CodeIgniter-4.6-EF4223?style=flat&logo=codeigniter)](https://codeigniter.com/)
 
-### Interfaz Web[![PHP](https://img.shields.io/badge/PHP-8.1-777BB4?style=flat&logo=php)](https://www.php.net/)
+## EjecuciónAplicación web y CLI para digitalizar contactos desde agendas físicas Rolodex.
 
-```bash[![Bootstrap](https://img.shields.io/badge/Bootstrap-5.1-7952B3?style=flat&logo=bootstrap)](https://getbootstrap.com/)
 
-php -S localhost:8080[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+
+**Web:**> **Una aplicación full-stack moderna para digitalizar contactos desde agendas físicas Rolodex**
+
+```bash
+
+php -S localhost:8080## 🚀 Ejecución
 
 ```
 
-Abrir: http://localhost:8080---
+[![CodeIgniter](https://img.shields.io/badge/CodeIgniter-4.6-EF4223?style=flat&logo=codeigniter)](https://codeigniter.com/)
 
+**CLI:**
+
+```bash### Interfaz Web[![PHP](https://img.shields.io/badge/PHP-8.1-777BB4?style=flat&logo=php)](https://www.php.net/)
+
+php contact-importer.php
+
+``````bash[![Bootstrap](https://img.shields.io/badge/Bootstrap-5.1-7952B3?style=flat&logo=bootstrap)](https://getbootstrap.com/)
+
+
+
+## Capturasphp -S localhost:8080[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+
+
+
+![Interfaz](Captura%20desde%202025-11-12%2021-34-16.png)```
+
+
+
+![Formulario](Captura%20desde%202025-11-12%2021-34-21.png)Abrir: http://localhost:8080---
+
+
+
+![Lista](Captura%20desde%202025-11-12%2021-34-30.png)
 
 
 ### CLI## 🌟 Características Principales
